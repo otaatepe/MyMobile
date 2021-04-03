@@ -73,6 +73,7 @@ class MenuOSApp(MDApp):
     def on_start(self):
 
         self.show_transaction_history()
+        return MyLayout()
 
 
 
