@@ -1,0 +1,336 @@
+#:import rgba kivy.utils.get_color_from_hex
+
+
+MyLayout:
+    orientation: "vertical"
+    pos_hint: {'center_x':.5}
+
+    MDBottomNavigation:
+        text_color_active: 30/255, 33/255, 45/255, 1
+        text_color_normal: 182/255, 137/255, 115/255, 1
+        panel_color: 250/255, 243/255, 224/255, 1
+        active_font_size: sp(12)
+        inactive_font_size: sp(10)
+
+        MDBottomNavigationItem:
+
+            text: "home"
+            name: "home"
+            icon: "home"
+
+            BoxLayout:
+                id: menu_home
+                size: root.size
+                orientation: 'vertical'
+                Image:
+
+                    size: self.size
+                    pos: self.pos
+                    keep_ratio: False
+                    allow_stretch: True
+                    source: "dobv1.jpg"
+
+        MDBottomNavigationItem:
+
+            text: "order"
+            name: "order"
+            icon: "food"
+            BoxLayout:
+                orientation: "vertical"
+
+                MDTabs:
+                    id: tabs
+                    background_color : 182/255, 137/255, 115/255, 1
+                    on_tab_switch: app.on_tab_switch(*args)
+
+                    Tab:
+                        id: 'merch'
+                        text: 'merch'
+
+                        BoxLayout:
+                            id: menu_order
+                            size: root.size
+                            orientation: 'vertical'
+                            GridLayout:
+                                cols : 2
+                                spacing: 20,10
+                                padding: 10
+
+                                MDCard:
+                                    id : caramel_whaffle
+                                    text : 'Caramel Whaffle'
+                                    orientation: "vertical"
+                                    padding: "2dp"
+                                    size: "120dp", "140dp"
+                                    on_release:app.impulse_item_clicked({'sku': '510001', 'pr_name': 'Caramel Whaffle', 'pr_price': '1.30'})
+                                    BoxLayout:
+                                        padding: 10,0,10,0
+                                        size_hint_y: .2
+                                        MDLabel:
+                                            text: "Caramel Whaffle"
+                                            theme_text_color: "Secondary"
+                                            height: self.texture_size[1]
+                                    Image:
+                                        size_hint_y: .6
+                                        source: "coffee_cup2.png"
+                                    BoxLayout:
+                                        padding: 10, 0, 10, 10
+                                        size_hint_y: .2
+                                        orientation: 'horizontal'
+                                        MDLabel:
+                                            font_style :"Caption"
+                                            size_hint_y: .5
+                                            #height: self.texture_size[1]
+                                            text: "£2.90"
+                                        MDLabel:
+                                            font_style :"Caption"
+                                            size_hint_y: .5
+                                            font_size: sp(12)
+                                            #height: self.texture_size[1]
+                                            halign: 'right'
+                                            text: "add"
+                                            text_color: 234/255, 191/255, 159/255, 1
+                                MDCard:
+                                    orientation: "vertical"
+                                    padding: "2dp"
+                                    size: "120dp", "140dp"
+                                    on_release:app.impulse_item_clicked({'sku': '510002', 'pr_name': 'Almond Biscotti', 'pr_price': '2.70'})
+                                    BoxLayout:
+                                        padding: 10,0,10,0
+                                        size_hint_y: .2
+                                        MDLabel:
+                                            text: "Almond Biscotti"
+                                            theme_text_color: "Secondary"
+                                            height: self.texture_size[1]
+                                    Image:
+                                        size_hint_y: .6
+                                        source: "coffee_cup2.png"
+                                    BoxLayout:
+                                        padding: 10, 0, 10, 10
+                                        size_hint_y: .2
+                                        orientation: 'horizontal'
+                                        MDLabel:
+                                            font_style :"Caption"
+                                            size_hint_y: .5
+                                            #height: self.texture_size[1]
+                                            text: "£2.90"
+                                        MDLabel:
+                                            font_style :"Caption"
+                                            size_hint_y: .5
+                                            font_size: sp(12)
+                                            #height: self.texture_size[1]
+                                            halign: 'right'
+                                            text: "add"
+                                            text_color: 234/255, 191/255, 159/255, 1
+
+        MDBottomNavigationItem:
+            text: "basket"
+            name: "basket"
+            icon: "basket"
+            BoxLayout:
+                orientation: "vertical"
+
+                MDTabs:
+                    id: tabs
+                    background_color : 182/255, 137/255, 115/255, 1
+                    on_tab_switch: app.on_tab_switch(*args)
+
+                    Tab:
+                        text: 'basket'
+                        id : basket
+
+                        BoxLayout:
+                            orientation : 'vertical'
+                            RV:
+                                id : rv
+                                viewclass: 'TableBasket'
+                                orientation: "vertical"
+                                spacing : 40
+                                padding : 10, 10
+                                space_x: self.size[0]/3
+                                data : self.rv_products
+
+                                RecycleBoxLayout:
+                                    id : rv_list
+                                    orientation: 'vertical'
+                                    #color:(0, 0.7, 0.4, 0.8)
+                                    default_size: None, dp(40)
+                                    default_size_hint: 10, None
+                                    size_hint_y: None
+                                    height: self.minimum_height
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 1, 1, 1
+                                        Rectangle:
+                                            pos: self.pos
+                                            size: self.size
+
+                            BoxLayout:
+                                orientation : 'vertical'
+                                #spacing : 20
+                                #pos : (20, 20)
+                                size: 300, 90
+                                size_hint: None, None
+                                canvas.before:
+                                    Color:
+                                        rgba: (234/255, 192/255, 159/255, 1)
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                BoxLayout :
+                                    orientation : 'horizontal'
+                                    padding : 10
+
+                                    MDLabel :
+                                        id : basket_sum
+                                        text_size : self.size
+                                        halign : 'right'
+                                        text : ""
+                                        #size: 50, 50
+                                        size_hint: .5, 1
+                                    MDLabel :
+                                        id : basket_sum_text
+                                        text : "Sum :  "
+                                        halign : 'right'
+                                        text_size : self.size
+                                        #size: 50, 50
+                                        size_hint: .5, 1
+                                BoxLayout :
+                                    orientation : 'horizontal'
+
+                                    Button:
+                                        text : 'PAY'
+                                        size: 150, 50
+                                        size_hint: None, None
+                                        on_release : app.pay_basket()
+                                    Button:
+                                        text : 'SAVE'
+                                        size_hint: None, None
+                                        size: 150, 50
+                    Tab:
+                        text: 'view-list'
+                        #on_release: app.show_items()
+
+                        BoxLayout:
+                            orientation : 'vertical'
+                            RVH:
+                                id : rvh
+                                viewclass: 'TableHistory'
+                                orientation: "vertical"
+                                spacing : 40
+                                padding : 10, 10
+                                space_x: self.size[0]/3
+                                data : self.rvh_transactions
+
+                                RecycleBoxLayout:
+                                    id : rvh_history_list
+                                    orientation: 'vertical'
+                                    #color:(0, 0.7, 0.4, 0.8)
+                                    default_size: None, dp(40)
+                                    default_size_hint: 10, None
+                                    size_hint_y: None
+                                    height: self.minimum_height
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 1, 1, 1
+                                        Rectangle:
+                                            pos: self.pos
+                                            size: self.size
+
+
+
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (1, 0.866, .0, 1) if self.selected else (0, 0.419, 1,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<TableBasket>:
+    orientation: 'horizontal'
+    sku: 'text'
+    pr_name: 'text'
+    pr_price: 'text'
+    #spacing: 40,50
+
+
+    MDRectangleFlatButton:
+        id: SKU
+        text: root.sku
+        text_color: 147/255, 135/255,125/255,1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+    MDRectangleFlatButton:
+        id: PR_name
+        text: root.pr_name
+        text_color: 147/255, 135/255,125/255,1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+
+    MDRectangleFlatButton:
+        id: PR_price
+        text: root.pr_price
+        text_color: 147/255, 135/255,125/255,1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+<TableHistory>:
+    orientation: 'horizontal'
+    trans_date: 'text'
+    trans_user: 'text'
+    trans_sum: 'text'
+    #spacing: 40,50
+
+
+    MDRectangleFlatButton:
+        id: TRANS_DATE
+        text: root.trans_date
+        text_color: 147/255, 135/255,125/255,1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+    MDRectangleFlatButton:
+        id: TRANS_USER
+        text: root.trans_user
+        text_color: 147/255, 135/255,125/255,1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+
+    MDRectangleFlatButton:
+        id: TRANS_SUM
+        text: root.trans_sum
+        text_color: 147/255, 135/255,125/255,1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+<Tab>:
+
+
